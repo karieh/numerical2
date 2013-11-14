@@ -35,7 +35,17 @@ B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in 
 To make a parametrized curve for fitting a shape we have used cubic Bezier curves. 
 
 Bezier curves
+
 Mean square problem
+
+To measure the distance between the original curve, \gamma, and the Bezier curves, we used the mean square distance 
+
+\begin{equation}
+E = \frac{1}{n} \sum_{i=1}^{n} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
+\end{equation}
+
+where $n$ is the number of points $\mathbf{x}_i$ on the curve. 
+
 parametrization of t
 Newton Raphson
 Divide curve in two, recursive, largest distance

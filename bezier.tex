@@ -56,7 +56,7 @@ where $n$ is the number of points $\mathbf{x}_i$ on the curve.
 parametrization of t
 Newton Raphson
 
-Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values so that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points from the curve $\gamma$. This method is partly based on \cite{Plass:1983}. Let
+Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
 
 \begin{equation}
 s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
@@ -64,9 +64,15 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-Newton-Raphson is a fixed point iteration 
+Newton-Raphson is a fixed point iteration method. Our goal is to find $t$-values such that the square distance between $\gamma$ and the Bezier curve is at its smallest. By  differentiating the square distance and equate it to zero, we find its minimum. Let $f(t) = \frac{d}{dt} [(X(t)-x)^2 + (Y(t)-y)^2 ]$ be the differentiated square distance. If Newton-Raphson does converge for the initial $t$-values, we will be able to find the root of $f(t) = 0$ with the equation
 
-For our parametrization values $t$, we use  To make our parametrization curve closer to $\gamma$, we used 
+\begin{equation}
+t = t - \frac{f(t)}{f'(t)}.
+\end{equation}
+
+This method converges quickly, so few steps are provided for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1. With the new $t$-values, we can check if the error is small enough to make a Bezier curve. If not, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
+
+
 
 
 

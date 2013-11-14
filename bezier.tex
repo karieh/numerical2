@@ -42,7 +42,7 @@ For the best fit we need to choose $P_1$ and $P_2$ such that the distance betwee
 E = \frac{1}{m} \sum_{i=1}^m \| \mathbf{x_i}
 \end{align}
 
-Mean square problem
+Mean square problem-----------------
 
 To measure the distance between the original curve, $\gamma$, and the Bezier curves, we used the mean square distance 
 
@@ -54,6 +54,24 @@ where $n$ is the number of points $\mathbf{x}_i$ on the curve.
 
 parametrization of t
 Newton Raphson
+
+Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values so that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points from the curve $\gamma$. This method is partly based on \cite{Plass:1983}. Let
+
+\begin{equation}
+s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
+\end{equation}
+
+be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
+
+Newton-Raphson is a fixed point iteration 
+
+For our parametrization values $t$, we use  To make our parametrization curve closer to $\gamma$, we used 
+
+
+
+
+
+
 Divide curve in two, recursive, largest distance
 
 Tangent vectors

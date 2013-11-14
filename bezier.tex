@@ -25,20 +25,26 @@ Hello
 
 \subsection*{Bezier curves and Bernstein polynomials}
 
-Bezier curves consist of a sum of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
+We have used bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
 \begin{align}
-B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1].
+B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1],
 \end{align}
+and a bezier curve of degree n is given by
+\begin{align}
+\mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P}_i B_{i}^n(t), \quad 0 \leq t \leq 1,
+\end{align}
+where $P_i$ are so called control. These points are chosen such that $P_0$ and $P_n$ are interpolation points between the bezier curve and $\gamma$. In this report we are using cubic bezier curves for solving the curve fitting problem, which means that each bezier curves is made out of 4 points. $P_0$ and $P_3$ are endpoints, and $P_1$ and $P_2$ are points giving the curvature.
 
+\subsection*{The mean square problem}
 
-
-To make a parametrized curve for fitting a shape we have used cubic Bezier curves. 
-
-Bezier curves
+For the best fit we need to choose $P_1$ and $P_2$ such that the distance between $\gamma$ and our bezier curve is the small. That is, we need to minimize the the following expression:
+\begin{align}
+E = \frac{1}{m} \sum_{i=1}^m \| \mathbf{x_i}
+\end{align}
 
 Mean square problem
 
-To measure the distance between the original curve, \gamma, and the Bezier curves, we used the mean square distance 
+To measure the distance between the original curve, $\gamma$, and the Bezier curves, we used the mean square distance 
 
 \begin{equation}
 E = \frac{1}{n} \sum_{i=1}^{n} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,

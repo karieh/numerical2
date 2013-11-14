@@ -14,34 +14,73 @@
                                           
 \begin{document}
 \maketitle
-Hello
 \begin{abstract}
+
+Bla bla Her kjem Abstract, men eg berre skriv litt for aa setje av plass til det. \\
+Jepsi pepsi \\
+Bezier er bra \\
+Hurra \\
 
 \end{abstract}
 
 \section{Introduction} 
 
+Bla bla Her kjem Introduction, men eg berre skriv litt for aa setje av plass til det. \\
+Jepsi pepsi \\
+Bezier er bra \\
+Hurra \\
+Tralalala \\
+Eg er litt gal. \\
+
 \section{Theory}
 
 \subsection*{Bezier curves and Bernstein polynomials}
 
-We have used bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
+We have used Bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
 \begin{align}
 B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1],
 \end{align}
 and a bezier curve of degree n is given by
 \begin{align}
-\mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P}_i B_{i}^n(t), \quad 0 \leq t \leq 1,
+\mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P_i} B_{i}^n(t), \quad 0 \leq t \leq 1,
 \end{align}
-where $P_i$ are so called control. These points are chosen such that $P_0$ and $P_n$ are interpolation points between the bezier curve and $\gamma$. In this report we are using cubic bezier curves for solving the curve fitting problem, which means that each bezier curves is made out of 4 points. $P_0$ and $P_3$ are endpoints, and $P_1$ and $P_2$ are points giving the curvature.
+where $\mathbf{P_i}$ are so called control. These points are chosen such that $\mathbf{P_0}$ and $\mathbf{P_n}$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P_0}$ and $\mathbf{P_3}$ are endpoints, and $\mathbf{P_1}$ and $\mathbf{P_2}$ are points giving the curvature.
 
-\subsection*{The mean square problem}
+\subsection*{The least mean square problem}
 
-For the best fit, $P_1$ and $P_2$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we need to minimize the the following expression:
+For the best fit, $\mathbf{P_1}$ and $\mathbf{P_2}$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we needed to minimize the the following expression:
+
 \begin{equation}
-E = \frac{1}{m} \sum_{i=1}^{m} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2
-\end{equation},
-for parametrization values $t_i \in [0,1]$
+E = \frac{1}{m} \sum_{i=1}^{m} \| \mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
+\end{equation}
+
+for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x_i}$ on $\gamma$. To do this we use a property of the Bezier curves: The two straight lines between $\mathbf{P_0}$ and $\mathbf{P_1}$, and $\mathbf{P_2}$ and $\mathbf{P_3}$ are tangents to the curve at $\mathbf{P_0}$ and $\mathbf{P_3}$ respectively:
+
+\begin{align}
+\mathbf{P_1} = \mathbf{P_0} + \alpha_1 \mathbf{v_0} \\
+\mathbf{P_2} = \mathbf{P_3} + \alpha_2 \mathbf{v_3}
+\end{align}
+
+Since $\mathbf{P_0}$ and $\mathbf{P_3}$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
+
+\begin{align}
+\alpha_1 \sum_{i = 1}^m B_1(t_i)^2 (v_{0x}^2 + v_{0y}^2) + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)(v_{0x}v_{3x} + v_{0y}v_{3y}) \\
+= - \sum_{i = 0}^m B_1(t_i)(v_{0x}A_x + v_{0y}A_y) \\
+\alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)(v_{0x}v_{3x} + v_{0y}v_{3y}) + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 (v_{3x}^2 + v_{3y}^2) \\
+= - \sum_{i = 0}^m B_1(t_i)(v_{3x}A_x + v_{3y}A_y)
+\end{align}
+
+\begin{align}
+\alpha_1 \sum_{i = 1}^m B_1(t_i)^2 |\mathbf{v_0}|^2 + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} 
+= - \sum_{i = 0}^m B_1(t_i) \mathbf{v_0} \cdot \mathbf{A_i}, \\
+\alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 |\mathbf{v_3}|^2 
+= - \sum_{i = 0}^m B_1(t_i)\mathbf{v_3} \cdot \mathbf{A_i},
+\end{align}
+
+where $\mathbf{A_i} = \mathbf{P_0}(B_0(t_i) + B_1(t_i) + \mathbf{P_3}(B_3(t_i) + B_2(t_i)) - \mathbf{x_i}$.
+
+
+
 
 Mean square problem-----------------
 

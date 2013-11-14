@@ -3,6 +3,7 @@
 \geometry{a4paper}
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{paralist}
 \usepackage[parfill]{parskip}
 
@@ -21,6 +22,15 @@ Hello
 \section{Introduction} 
 
 \section{Theory}
+
+\subsection*{Bezier curves and Bernstein polynomials}
+
+Bezier curves consist of a sum of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
+\begin{align}
+B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1].
+\end{align}
+
+
 
 To make a parametrized curve for fitting a shape we have used cubic Bezier curves. 
 

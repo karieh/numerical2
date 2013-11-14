@@ -37,10 +37,11 @@ where $P_i$ are so called control. These points are chosen such that $P_0$ and $
 
 \subsection*{The mean square problem}
 
-For the best fit we need to choose $P_1$ and $P_2$ such that the distance between $\gamma$ and our bezier curve is the small. That is, we need to minimize the the following expression:
-\begin{align}
-E = \frac{1}{m} \sum_{i=1}^m \| \mathbf{x_i}
-\end{align}
+For the best fit, $P_1$ and $P_2$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we need to minimize the the following expression:
+\begin{equation}
+E = \frac{1}{m} \sum_{i=1}^{m} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2
+\end{equation},
+for parametrization values $t_i \in [0,1]$
 
 Mean square problem-----------------
 

@@ -61,7 +61,7 @@ for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x}_i$ on $\gamm
 \mathbf{P}_2 = \mathbf{P}_2 + \alpha_2 \mathbf{v}_3
 \end{align}
 
-Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
+Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. To find where $E$ is smallest, we differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$ and set the expressions to equal zero. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
 
 
 \begin{align}
@@ -74,24 +74,29 @@ Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $
 where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) + B_2(t_i)) - \mathbf{x}_i$.
 
 
-\subsection*{Avoiding singular matrices}
-When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
-
-
-To measure the distance between the original curve, $\gamma$, and the Bezier curves, we used the mean square distance 
-
-\begin{equation}
-E = \frac{1}{m} \sum_{i=1}^{m} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
-\end{equation}
-
-where $n$ is the number of points $\mathbf{x}_i$ on the curve. 
 
 parametrization of t
 Newton Raphson
 
 \subsection*{Choosing initial $t$-values and Newton-Raphson Iteration}
 
-Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
+Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But is this really the parametrization that gives the smallest distance between the Bezier curve and $\gamma$? To see if it is we differentiate the distance between the two curves,
+\begin{align}
+(S_x(t) - x)^2 + (S_y(t) - y)^2,
+\end{align}
+with respect to $t$, where $S_x$ and $S_y$ are x- and y-coordinates on the Bezier curve, and $x$ and $y$ are coordinates on $\gamma$. We equate it to zero to find it's minimum, and we end up with a fifth-degree equation for $t$:
+\begin{align}
+f(t) =  2(X(t)-x)X'(t) + 2(Y(t)-y)Y'(t) = 0.
+\end{align}
+To find the solution we use the Newton-Raphson iterative method:
+\begin{align}
+t \gets t - \frac{f(t)}{f'(t)},
+\end{align}
+which will converge for the right initial $t$-values.
+
+
+
+when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
 
 \begin{equation}
 s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}

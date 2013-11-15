@@ -134,6 +134,8 @@ A tangent vector that has its origin in a corner will only need data points from
 
 If the error between a Bezier curve and the original curve is too large, the curve is divided in two, where the dividing point, hereby called $\mathbf{P}_i$ becomes new end points, $\mathbf{P}_0$ and $\mathbf{P}_3$, for the two Bezier curves. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. The unit tangent vector is computed in the same way as described earlier, such that $\mathbf{v}_i = \mathbf{v}_0 = -\mathbf{v}_3$. $\mathbf{v}_3$ is negative because it's pointing in the opposite direction. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points. 
 
+If the shape to be fitted has smooth corners, one option is to 
+
 
 \subsection*{Avoiding singular matrices}
 When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.

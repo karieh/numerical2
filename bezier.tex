@@ -44,7 +44,7 @@ and a bezier curve of degree n is given by
 \begin{align}
 \mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P_i} B_{i}^n(t), \quad 0 \leq t \leq 1,
 \end{align}
-where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are endpoints, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
+where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are starting- and endpoint, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
 
 \subsection*{The least mean square problem}
 
@@ -63,6 +63,10 @@ for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x}_i$ on $\gamm
 
 Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a387bec8b98a18635eddd891c222b5d0395d96e0
 \begin{align}
 \alpha_1 \sum_{i = 1}^m B_1(t_i)^2 |\mathbf{v}_0|^2 + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v}_0 \cdot \mathbf{v}_3 
 = - \sum_{i = 0}^m B_1(t_i) \mathbf{v}_0 \cdot \mathbf{A}_i, \\
@@ -72,6 +76,23 @@ Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $
 
 where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) + B_2(t_i)) - \mathbf{x}_i$.
 
+<<<<<<< HEAD
+=======
+\subsection*{Avoiding singular matrices}
+When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
+
+
+To measure the distance between the original curve, $\gamma$, and the Bezier curves, we used the mean square distance 
+
+\begin{equation}
+E = \frac{1}{m} \sum_{i=1}^{m} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
+\end{equation}
+
+where $n$ is the number of points $\mathbf{x}_i$ on the curve. 
+
+parametrization of t
+Newton Raphson
+>>>>>>> a387bec8b98a18635eddd891c222b5d0395d96e0
 
 \subsection*{Choosing initial $t$-values and Newton-Raphson Iteration}
 
@@ -101,8 +122,18 @@ This method converges quickly, so few steps are provided for a $t$-value close e
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
 
 \subsection*{Unit tangent vectors}
+<<<<<<< HEAD
 To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the endpoints $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$. A tangent vector that has its origin in a corner will only need data points from one side of the endpoint. That is, the slope of the vector $\mathbf{v}_0$ is measured by $m_0 = (y_{0+r} - y_0)/(x_{0+r} - x_0)$, and the tangent vector is $\mathbf{v}_0 = [1, m_0]^T$. Dividing with the norm gives the \emph{unit} tangent vector.
  Let $r$ be the number of points away from the endpoint. Then the slope of the tangent vector is given by b
+=======
+To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the endpoints $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
+
+A tangent vector that has its origin in a corner will only need data points from one side of the endpoint. That is, the slope of the vector $\mathbf{v}_0$ is measured by $m_0 = (y_{0+r} - y_0)/(x_{0+r} - x_0)$, $r$ being a positive integer denoting the number of data points away from the end point. The unit tangent vector is  $\mathbf{v}_0 = \frac{[1, m_0]^T}{\sqrt{1+m_0^2}}$, where we have divided with the norm. If the denominator in $m_0$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_0 = [0,1]$ when $x_{0+r} - x_0$ is below some limit close to zero. 
+
+If the error between a Bezier curve and the original curve is too large, the curve is divided in two, where the dividing point, hereby called $\mathbf{P}_{new}$ becomes a new starting- and endpoint, $\mathbf{P}_0$ and $\mathbf{P}_3$ respectively, for the two Bezier curves. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_{new}$ on the curve, with slope $m_0 = (y_{0+r} - y_{0-r})/(x_{0+r} - x_{0-r})$. The tangent vector $\mathbf{v}_{new} = $
+
+
+>>>>>>> a387bec8b98a18635eddd891c222b5d0395d96e0
 
 \subsection*{Avoiding singular matrices}
 When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.

@@ -110,8 +110,8 @@ This method converges quickly, so few steps are required for a $t$-value close e
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{newtons2-crop.pdf}
-    \caption{Newton-Raphson iterations}
+    \includegraphics[scale=0.6]{newtons2-crop.pdf}
+    \caption{Result after 3 Newton-Raphson iterations. The blue curve ($\gamma$) is a part of a sine function. The green curve is the Bezier curve with initial $t$-values. The red curve is the Bezier curve after 3 iterations. A straight line represents the distance between a point on $\gamma$ and the corresponding point on the Bezier curve.}
 \end{figure} 
 
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is a good idea to split the interval in two, and do new approximations for the $t$-values.

@@ -114,7 +114,7 @@ This method converges quickly, so few steps are required for a $t$-value close e
     \caption{Newton-Raphson iterations}
 \end{figure} 
 
-With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
+With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is possible to split the interval in two, and do new approximations for the $t$-values.
 
 
 
@@ -126,7 +126,7 @@ A tangent vector that has its origin in a corner will only need data points from
 
 If the error between a Bezier curve and the original curve is too large, the curve is divided in two, where the dividing point, hereby called $\mathbf{P}_i$ becomes new end points, $\mathbf{P}_0$ and $\mathbf{P}_3$, for the two Bezier curves. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. The unit tangent vector is computed in the same way as described earlier, such that $\mathbf{v}_i = \mathbf{v}_0 = -\mathbf{v}_3$. $\mathbf{v}_3$ is negative because it's pointing in the opposite direction. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points. 
 
-If the shape to be fitted has smooth corners, one option is to 
+If the shape to be fitted has smooth corners, one option is to make all end points $C^1$. This can be done by constructing one tangent vector in an optional point on the curve, and construct new tangent vectors in points from dividing the curve recursively.
 
 
 \subsection*{Avoiding singular matrices}

@@ -6,6 +6,8 @@
 \usepackage{amsmath}
 \usepackage{paralist}
 \usepackage[parfill]{parskip}
+\usepackage{float}
+
 
 \title{TMA4215 Numerical Mathematics: Project 2 \\ Replace this line with your own title} 
 \author{Student nr. 6XXXXX and 7XXXXX} % Here you insert the student number of the members of the group.
@@ -95,11 +97,7 @@ To find the solution we use the Newton-Raphson iterative method:
 \begin{align}
 t \gets t - \frac{f(t)}{f'(t)},
 \end{align}
-which will converge for the right initial $t$-values.
-
-
-
-when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
+which will converge for the right starting values for $t$. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
 
 \begin{equation}
 s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
@@ -107,20 +105,14 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-Newton-Raphson is a fixed point iteration method. Our goal is to find $t$-values such that the square distance between $\gamma$ and the Bezier curve, given by the points $X(t)$ and $Y(t)$, is at its smallest. By  differentiating the square distance and equate it to zero, we find its minimum. Let
+This method converges quickly, so few steps are required for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
 
-\begin{align}
-f(t) &= \frac{d}{dt} [(X(t)-x)^2 + (Y(t)-y)^2 ] \\
-&= 2(X(t)-x)X'(t) + 2(Y(t)-y)Y'(t)
-\end{align}
 
-be the differentiated square distance. If Newton-Raphson converges for the initial $t$-values, we will be able to find the root of $f(t) = 0$ with the equation
-
-\begin{equation}
-t = t - \frac{f(t)}{f'(t)}.
-\end{equation}
-
-This method converges quickly, so few steps are provided for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{newtons2-crop.pdf}
+    \caption{Newton-Raphson iterations}
+\end{figure} 
 
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
 

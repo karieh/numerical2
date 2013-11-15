@@ -44,35 +44,45 @@ and a bezier curve of degree n is given by
 \begin{align}
 \mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P_i} B_{i}^n(t), \quad 0 \leq t \leq 1,
 \end{align}
-where $\mathbf{P_i}$ are so called control. These points are chosen such that $\mathbf{P_0}$ and $\mathbf{P_n}$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P_0}$ and $\mathbf{P_3}$ are endpoints, and $\mathbf{P_1}$ and $\mathbf{P_2}$ are points giving the curvature.
+where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are endpoints, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
 
 \subsection*{The least mean square problem}
 
-For the best fit, $\mathbf{P_1}$ and $\mathbf{P_2}$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we needed to minimize the the following expression:
+For the best fit, $\mathbf{P}_1$ and $\mathbf{P}_2$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we needed to minimize the the following expression:
 
 \begin{equation}
 E = \frac{1}{m} \sum_{i=1}^{m} \| \mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
 \end{equation}
 
-for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x_i}$ on $\gamma$. To do this we use a property of the Bezier curves: The two straight lines between $\mathbf{P_0}$ and $\mathbf{P_1}$, and $\mathbf{P_2}$ and $\mathbf{P_3}$ are tangents to the curve at $\mathbf{P_0}$ and $\mathbf{P_3}$ respectively:
+for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x}_i$ on $\gamma$. To do this we use a property of the Bezier curves: The two straight lines between $\mathbf{P}_0$ and $\mathbf{P}_1$, and $\mathbf{P}_2$ and $\mathbf{P}_3$ are tangents, $\mathbf{v}_0$ and $\mathbf{v}_3$, to the curve at $\mathbf{P}_0$ and $\mathbf{P}_3$ respectively:
 
 \begin{align}
-\mathbf{P_1} = \mathbf{P_0} + \alpha_1 \mathbf{v_0} \\
-\mathbf{P_2} = \mathbf{P_3} + \alpha_2 \mathbf{v_3}
+\mathbf{P}_1 = \mathbf{P}_2 + \alpha_1 \mathbf{v}_0 \\
+\mathbf{P}_2 = \mathbf{P}_2 + \alpha_2 \mathbf{v}_3
 \end{align}
 
-Since $\mathbf{P_0}$ and $\mathbf{P_3}$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
+Since $\mathbf{P}_0$ and $\mathbf{P}_3$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
 
+<<<<<<< HEAD
 \begin{align}
 \alpha_1 \sum_{i = 1}^m B_1(t_i)^2 |\mathbf{v_0}|^2 + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} 
 = - \sum_{i = 1}^m B_1(t_i) \mathbf{v_0} \cdot \mathbf{A_i}, \\
 \alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 |\mathbf{v_3}|^2 
 = - \sum_{i = 1}^m B_2(t_i)\mathbf{v_3} \cdot \mathbf{A_i},
+=======
+
+\begin{align}
+\alpha_1 \sum_{i = 1}^m B_1(t_i)^2 |\mathbf{v}_0|^2 + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v}_0 \cdot \mathbf{v}_3 
+= - \sum_{i = 0}^m B_1(t_i) \mathbf{v}_0 \cdot \mathbf{A}_i, \\
+\alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v}_0 \cdot \mathbf{v}_3 + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 |\mathbf{v}_3|^2 
+= - \sum_{i = 0}^m B_1(t_i)\mathbf{v}_3 \cdot \mathbf{A}_i,
+>>>>>>> d5aa9474e1da197a4ad43ba1cc6537aab483b7b1
 \end{align}
 
-where $\mathbf{A_i} = \mathbf{P_0}(B_0(t_i) + B_1(t_i) + \mathbf{P_3}(B_3(t_i) + B_2(t_i)) - \mathbf{x_i}$.
+where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) + B_2(t_i)) - \mathbf{x}_i$.
 
-
+\subsection*{Avoiding singular matrices}
+When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
 
 
 Mean square problem-----------------

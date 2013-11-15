@@ -64,17 +64,10 @@ for parametrization values $t_i \in [ 0,1 ]$ and points $\mathbf{x_i}$ on $\gamm
 Since $\mathbf{P_0}$ and $\mathbf{P_3}$ are known from the points on the curve $\gamma$, this problem is reduced to finding $\alpha_1$ and $\alpha_2$ such that $E$ is small. We differentiate $E$ with respect to $\alpha_1$ and $\alpha_2$. To ease the reader we omit the whole process, and only state the resulting system of equations for $\alpha_1$ and $\alpha_2$:
 
 \begin{align}
-\alpha_1 \sum_{i = 1}^m B_1(t_i)^2 (v_{0x}^2 + v_{0y}^2) + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)(v_{0x}v_{3x} + v_{0y}v_{3y}) \\
-= - \sum_{i = 0}^m B_1(t_i)(v_{0x}A_x + v_{0y}A_y) \\
-\alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)(v_{0x}v_{3x} + v_{0y}v_{3y}) + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 (v_{3x}^2 + v_{3y}^2) \\
-= - \sum_{i = 0}^m B_1(t_i)(v_{3x}A_x + v_{3y}A_y)
-\end{align}
-
-\begin{align}
 \alpha_1 \sum_{i = 1}^m B_1(t_i)^2 |\mathbf{v_0}|^2 + \alpha_2 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} 
-= - \sum_{i = 0}^m B_1(t_i) \mathbf{v_0} \cdot \mathbf{A_i}, \\
+= - \sum_{i = 1}^m B_1(t_i) \mathbf{v_0} \cdot \mathbf{A_i}, \\
 \alpha_1 \sum_{i = 1}^m B_1(t_i)B_2(t_i)\mathbf{v_0} \cdot \mathbf{v_3} + \alpha_2 \sum_{i = 1}^m B_2(t_i)^2 |\mathbf{v_3}|^2 
-= - \sum_{i = 0}^m B_1(t_i)\mathbf{v_3} \cdot \mathbf{A_i},
+= - \sum_{i = 1}^m B_2(t_i)\mathbf{v_3} \cdot \mathbf{A_i},
 \end{align}
 
 where $\mathbf{A_i} = \mathbf{P_0}(B_0(t_i) + B_1(t_i) + \mathbf{P_3}(B_3(t_i) + B_2(t_i)) - \mathbf{x_i}$.
@@ -87,7 +80,7 @@ Mean square problem-----------------
 To measure the distance between the original curve, $\gamma$, and the Bezier curves, we used the mean square distance 
 
 \begin{equation}
-E = \frac{1}{n} \sum_{i=1}^{n} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
+E = \frac{1}{m} \sum_{i=1}^{m} \|\mathbf{x}_i - \mathbf{S}(t_i)\|^2_2,
 \end{equation}
 
 where $n$ is the number of points $\mathbf{x}_i$ on the curve. 
@@ -95,7 +88,9 @@ where $n$ is the number of points $\mathbf{x}_i$ on the curve.
 parametrization of t
 Newton Raphson
 
-Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
+\subsection*{Choosing initial $t$-values and Newton-Raphson Iteration}
+
+Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But when measuring the distance between $\mathbf{x}_i$ and the respective value $\mathbf{S}(t_i)$, we cannot be sure this is the minimal distance between the Bezier curve and $\gamma$. If we can manage to displace the $t$-values such that the distance between two respective points are minimal, the measured error is much more precise. This can be done using Newton-Raphson iteration. But for this iteration to converge, we need sufficiently good starting values. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
 
 \begin{equation}
 s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
@@ -103,14 +98,26 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-Newton-Raphson is a fixed point iteration method. Our goal is to find $t$-values such that the square distance between $\gamma$ and the Bezier curve is at its smallest. By  differentiating the square distance and equate it to zero, we find its minimum. Let $f(t) = \frac{d}{dt} [(X(t)-x)^2 + (Y(t)-y)^2 ]$ be the differentiated square distance. If Newton-Raphson does converge for the initial $t$-values, we will be able to find the root of $f(t) = 0$ with the equation
+Newton-Raphson is a fixed point iteration method. Our goal is to find $t$-values such that the square distance between $\gamma$ and the Bezier curve, given by the points $X(t)$ and $Y(t)$, is at its smallest. By  differentiating the square distance and equate it to zero, we find its minimum. Let
+
+\begin{align}
+f(t) &= \frac{d}{dt} [(X(t)-x)^2 + (Y(t)-y)^2 ] \\
+&= 2(X(t)-x)X'(t) + 2(Y(t)-y)Y'(t)
+\end{align}
+
+be the differentiated square distance. If Newton-Raphson converges for the initial $t$-values, we will be able to find the root of $f(t) = 0$ with the equation
 
 \begin{equation}
 t = t - \frac{f(t)}{f'(t)}.
 \end{equation}
 
-This method converges quickly, so few steps are provided for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1. With the new $t$-values, we can check if the error is small enough to make a Bezier curve. If not, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
+This method converges quickly, so few steps are provided for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
 
+With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is a good idea to split the interval in two, and do new approximations for the $t$-values.
+
+\subsection*{Unit tangent vectors}
+To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the endpoints $\mathbf{P}_0$ and $\mathbf{P}_3}$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$. A tangent vector that has its origin in a corner will only need data points from one side of the endpoint. That is, the slope of the vector $\mathbf{v}_0$ is measured by $m_0 = (y_{0+r} - y_0)/(x_{0+r} - x_0)$, and the tangent vector is $\mathbf{v}_0 = [1, m_0]^T$. Dividing with the norm gives the \emph{unit} tangent vector.
+ Let $r$ be the number of points away from the endpoint. Then the slope of the tangent vector is given by 
 
 
 

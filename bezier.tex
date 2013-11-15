@@ -44,7 +44,7 @@ and a bezier curve of degree n is given by
 \begin{align}
 \mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P_i} B_{i}^n(t), \quad 0 \leq t \leq 1,
 \end{align}
-where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are endpoints, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
+where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are starting- and endpoint, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
 
 \subsection*{The least mean square problem}
 
@@ -118,9 +118,11 @@ With the new $t$-values, we can check the error between the Bezier curve and $\g
 \subsection*{Unit tangent vectors}
 To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the endpoints $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
 
-A tangent vector that has its origin in a corner will only need data points from one side of the endpoint. That is, the slope of the vector $\mathbf{v}_0$ is measured by $m_0 = (y_{0+r} - y_0)/(x_{0+r} - x_0)$, $r$ being the number of data points away from the end point. The unit tangent vector is  $\mathbf{v}_0 = \frac{[1, m_0]^T}{\sqrt{1+m_0^2}}$ . 
+A tangent vector that has its origin in a corner will only need data points from one side of the endpoint. That is, the slope of the vector $\mathbf{v}_0$ is measured by $m_0 = (y_{0+r} - y_0)/(x_{0+r} - x_0)$, $r$ being a positive integer denoting the number of data points away from the end point. The unit tangent vector is  $\mathbf{v}_0 = \frac{[1, m_0]^T}{\sqrt{1+m_0^2}}$, where we have divided with the norm. If the denominator in $m_0$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_0 = [0,1]$ when $x_{0+r} - x_0$ is below some limit close to zero. 
 
- Then the slope of the tangent vector is given by b
+If the error between a Bezier curve and the original curve is too large, the curve is divided in two, where the dividing point, hereby called $\mathbf{P}_{new}$ becomes a new starting- and endpoint, $\mathbf{P}_0$ and $\mathbf{P}_3$ respectively, for the two Bezier curves. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_{new}$ on the curve, with slope $m_0 = (y_{0+r} - y_{0-r})/(x_{0+r} - x_{0-r})$. The tangent vector $\mathbf{v}_{new} = $
+
+
 
 
 

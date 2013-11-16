@@ -146,16 +146,11 @@ If $\gamma$ has less than 3 points, splitting the curve will not make a better p
 
 
 \section*{Unit tangent vectors}
-To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the end points $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
+The unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$ can be found by using the data points $x$ and $y$ around the end points $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
 
-A tangent vector that has its origin in a corner will only need data points from one side of the end point. That is, the slope of the vector $\mathbf{v}_i$ is measured by $m_i = (y_{i+r} - y_0)/(x_{i+r} - x_0)$, $r$ being a positive integer denoting the number of data points away from the end point. One way of choosing $r$ is defining it as a fraction of the total number of data points, rounded upwards to the closest integer (------------may use math notation here).
- The unit tangent vector is  $\mathbf{v}_i = \frac{[1, m_i]^T}{\sqrt{1+m_i^2}}$, where we have divided with the norm. If the denominator in $m_i$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_i = [0,1]$ when $x_{i+r} - x_i$ is below some limit close to zero. 
+A tangent vector that has its origin in a detected corner will only need data points from one side of the end point. The unit tangent vector is  $\mathbf{v}_i = \frac{[1, m_i]^T}{\sqrt{1+m_i^2}}$, where $m_i = (y_{i+r} - y_i)/(x_{i+r} - x_i)$ and $r$ is a positive integer denoting the number of data points away from the end point.
 
-If the error between a Bezier curve and the original curve is too large, the curve is divided in two, where the dividing point, hereby called $\mathbf{P}_i$ becomes new end points, $\mathbf{P}_0$ and $\mathbf{P}_3$, for the two Bezier curves. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. The unit tangent vector is computed in the same way as described earlier, such that $\mathbf{v}_i = \mathbf{v}_0 = -\mathbf{v}_3$. $\mathbf{v}_3$ is negative because it's pointing in the opposite direction. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points. 
-
-If the shape to be fitted has smooth corners, one option is to make all end points $C^1$. This can be done by constructing one tangent vector in an optional point on the curve, and construct new tangent vectors in points from dividing the curve recursively.
-
-
+A tangent vector that has its origin in a new control point will need data points from both sides, since the curve should be $C^1$. The unit tangent vector is constructed in the same way as above, only with $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$.
 
 
 \section{Numerical experiments}
@@ -168,6 +163,8 @@ We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner
 The tolerance is a unitless size which depends on the number of data points from the shape. Thus, small images need a lower tolerance to get a good approximation to the shape.  An illustration of this is shown in Figure~\ref{fig:mickey}. The algorithm is run on the same shape with $tolerance = 20$, but with different image size. The smaller set of data points constructs a less accurate fit to the original shape even though the original images look practically the same. 
 
 To be able to reconstruct the Bezier curves, we store the control points for each segment recursively.
+
+If the error between a Bezier curve and the original curve is too large, the curve is divided in two in a new point $\mathbf{P}_i$. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. If the denominator in $m_i$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_i = [0,1]$ when $x_{i+r} - x_i$ is below some limit close to zero. One way of choosing $r$ is defining it as a fraction of the total number of data points, rounded upwards to the closest integer. We found that this generally gave better results for different shapes. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points.
 
 
 \subsection*{Avoiding singular matrices}

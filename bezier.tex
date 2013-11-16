@@ -159,19 +159,6 @@ If the error between a Bezier curve and the original curve is too large, the cur
 If the shape to be fitted has smooth corners, one option is to make all end points $C^1$. This can be done by constructing one tangent vector in an optional point on the curve, and construct new tangent vectors in points from dividing the curve recursively.
 
 
-\section*{Avoiding singular matrices}
-When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
-
-
-Divide curve in two, recursive, largest distance
-Singular matrices
-divergent t-values
-
-
-Tangent vectors
-Corners, control points
-Number of Bezier curves (Numerical section?
-Figures are good!
 
 
 \section{Numerical experiments}
@@ -184,6 +171,10 @@ We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner
 The tolerance is a unitless size which depends on the number of data points from the shape. Thus, small images need a lower tolerance to get a good approximation to the shape.  An illustration of this is shown in Figure~\ref{fig:mickey}. The algorithm is run on the same shape with $tolerance = 20$, but with different image size. The smaller set of data points constructs a less accurate fit to the original shape even though the original images look practically the same. 
 
 To be able to reconstruct the Bezier curves, we store the control points for each segment recursively.
+
+
+\subsection*{Avoiding singular matrices}
+When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
 
 
 

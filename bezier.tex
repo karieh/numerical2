@@ -165,6 +165,30 @@ Figures are good!
 
 In this section we will present the results of our algorithm run on different test problems. We will see how smoothness in the corners affects the imaging, and we will see the effects of different values for the space parameter and the error tolerance.
 
+We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner detection and tolerance = 2. The tolerance is a unit less size which depends on the number of 
+
+\begin{figure}
+\caption{The picture to the left shows the original image to be fitted. The picture to the right shows the approximated curve consisting of 63 Bezier curves. The starred points are detected corners before curve fitting. The circled dots illustrate the new end points where the Bezier curves are split in two.}
+\centering
+\begin{minipage}[t]{.49\textwidth}
+\centering
+\vspace{0pt}
+    \includegraphics[scale=0.3]{disney.jpg}
+    \label{fig:cornerdet}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\vspace{0pt}
+    \includegraphics[scale=0.45]{figure5-crop.pdf}
+    \label{fig:cornerdet}
+\end{minipage}\hfill
+\label{fig:stitch}
+\end{figure}
+
+
+With and without corner detection
+Different tolerances
+with and without Newton iteration?
 
 
 

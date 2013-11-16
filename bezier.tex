@@ -83,19 +83,19 @@ where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) +
 
 \section*{Choosing initial $t$-values and Newton-Raphson Iteration}
 
-Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But is this really the parametrization that gives the smallest distance between the Bezier curve and $\gamma$? To see if it is we differentiate the distance between the two curves,
-\begin{align}
-(S_x(t) - x)^2 + (S_y(t) - y)^2,
-\end{align}
-with respect to $t$, where $S_x$ and $S_y$ are x- and y-coordinates on the Bezier curve, and $x$ and $y$ are coordinates on $\gamma$. We equate it to zero to find it's minimum, and we end up with a fifth-degree equation for $t$:
+To find the parametrization which gives the smallest distance between the Bezier curve and $\gamma$, we differentiate the distance between the two curves with respect to $t$ and equate to 0:
+
 \begin{align}
 f(t) =  2(X(t)-x)X'(t) + 2(Y(t)-y)Y'(t) = 0.
 \end{align}
-To find the solution we use the Newton-Raphson iterative method:
+
+Here, $X(t)$ and $Y(t)$ are coordinates on the Bezier curve, and $x$ and $y$ are coordinates on $\gamma$. This is a fifth-degree equation for $t$, and we use the Newton-Raphson iterative method,
+
 \begin{align}
-t \gets t - \frac{f(t)}{f'(t)},
+t \gets t - \frac{f(t)}{f'(t)}.
 \end{align}
-which will converge for the right starting values for $t$. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
+
+to find the solution. This method will converge for the right starting values for $t$. We use initial $t$-values given by the distance between the data points, $x$ and $y$, from the curve $\gamma$. This method is merely based on \cite{Plass:1983}. Let
 
 \begin{equation}
 s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
@@ -103,7 +103,7 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so few steps are required for a $t$-value close enough to the root. We can see how the $t$-values in Figure \ref{fig:Newton-Raphson} are quite shifted after 3 iterations, from the green lines to the red lines.It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
+As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so few steps are required for a $t$-value close enough to the root. We can see how the $t$-values in Figure \ref{fig:Newton-Raphson} are quite shifted after 3 iterations, from the green lines to the red lines. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
 
 \begin{figure}
 \centering
@@ -122,7 +122,7 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 
 
 \section*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. Figure~\ref{fig:kurvedeling1} and Figure~\ref{fig:kurvedeling2} show how this splitting is done on an example curve. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
+After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. Figure 2 and Figure 3 show how this splitting is done on an example curve. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
 
 \begin{figure}
 \centering
@@ -164,11 +164,13 @@ The tolerance is a unitless size which depends on the number of data points from
 
 To be able to reconstruct the Bezier curves, we store the control points for each segment recursively.
 
+
 If the error between a Bezier curve and the original curve is too large, the curve is divided in two in a new point $\mathbf{P}_i$. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. If the denominator in $m_i$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_i = [0,1]$ when $x_{i+r} - x_i$ is below some limit close to zero. One way of choosing $r$ is defining it as a fraction of the total number of data points, rounded upwards to the closest integer. We found that this generally gave better results for different shapes. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points.
 
 
 \subsection*{Avoiding singular matrices}
-In the early stages of our research, we had some problems with the plotting of our Bezier curves; some parts of the curve were not drawn. The reason, we discovered, was that some of our matrices in the calculation of $\alpha_1$ and $\alpha_2$ was singular. This error arises when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, which happens when the number of points in our subset of points are smaller than 3. This is why we included a space limitation in our algorithm which stops the recursion when the subset of points is smaller then a certain space parameter.
+
+In the early stages of our research, we had some problems with the plotting of our Bezier curves; some parts of the curve were not drawn. The reason, we discovered, was that some of our matrices in the calculation of $\alpha_1$ and $\alpha_2$ was singular. This error arises when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, which happens when our subset of points are smaller than 3. This is why we included a space limitation in our algorithm which stops the recursion when the subset of points is smaller then a certain space parameter.
 
 
 

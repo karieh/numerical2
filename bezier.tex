@@ -144,11 +144,11 @@ When solving the system of equations above, a problem of a singular matrix may a
 
 
 \subsection*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively. 
+After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively. 
 
 If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
 
-----------------------
+-----------------------
 
 Divide curve in two, recursive, largest distance
 Singular matrices

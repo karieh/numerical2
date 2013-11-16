@@ -18,12 +18,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-
-Bla bla Her kjem Abstract, men eg berre skriv litt for aa setje av plass til det. \\
-Jepsi pepsi \\
-Bezier er bra \\
-Hurra \\
-
+This paper takes on curve fitting with cubic Bezier curves. A algorithm for piecewise curve fitting is presented. Test problems of different character are included to show the performance of our algorithm.
 \end{abstract}
 
 \section*{Introduction} 
@@ -232,6 +227,11 @@ with and without Newton iteration?
 
 
 \section*{Conclusion}
+In this paper we have fitted cubic Bezier curves to shapes of choice.
+
+We were able to minimize the number of curves used for a given error tolerance by using the Newton-Raphson method for finding optimal $t$-values. If the error isn't small enough after a given number of iterations, the curve is divided in two. Problems occured when straight lines were to be approximated. This was fixed by adding a default tangent vector, and a limitation for the dividing of curves. With our algorithm it is also possible to display the number of curves used, and the points that are used to generate the Bezier curves.
+
+
 \cite{Plass:1983}
 
 \bibliographystyle{plain}

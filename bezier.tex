@@ -7,6 +7,7 @@
 \usepackage{paralist}
 \usepackage[parfill]{parskip}
 \usepackage{float}
+\usepackage{capt-of}
 
 
 \title{TMA4215 Numerical Mathematics: Project 2 \\ Replace this line with your own title} 
@@ -105,13 +106,29 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-This method converges quickly, so few steps are required for a $t$-value close enough to the root. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
+As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so few steps are required for a $t$-value close enough to the root. We can see how the $t$-values in Figure \ref{fig:Newton-Raphson} are quite shifted after 3 iterations, from the green lines to the red lines. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
+
+
+
+
+\begin{tabular}{ l c r }
+  Initial & Iteration 3 & Iteration 7 & Iteration 8 \\ \hline
+  0.0237 & 0.0165 & 0.0161 & 0.0161 \\ \hline
+  0.1859 & 0.1429 & 0.1403 & 0.1403 \\ \hline
+  0.2923 & 0.2439 & 0.2400 & 0.2399 \\ \hline
+  0.4235 & 0.3969 & 0.3937 & 0.3937 \\ \hline
+  0.5084 & 0.5115 & 0.5119 & 0.5120 \\ \hline
+  0.6304 & 0.6701 & 0.6741 & 0.6742 \\ \hline
+  0.7282 & 0.7770 & 0.7806 & 0.7807 \\ \hline
+  0.8823 & 0.9136 & 0.9152 & 0.9153 \\ \hline
+\end{tabular}
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{newtons2-crop.pdf}
     \caption{Result after 3 Newton-Raphson iterations. The blue curve ($\gamma$) is a part of a sine function. The green curve is the Bezier curve with initial $t$-values. The red curve is the Bezier curve after 3 iterations. A straight line represents the distance between a point on $\gamma$ and the corresponding point on the Bezier curve.}
+    \label{fig:Newton-Raphson}
 \end{figure} 
 
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is possible to split the interval in two, and do new approximations for the $t$-values.

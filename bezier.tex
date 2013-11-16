@@ -35,11 +35,9 @@ Hurra \\
 Tralalala \\
 Eg er litt gal. \\
 
-\section{Theory}
 
 
-
-\subsection*{Bezier curves and Bernstein polynomials}
+\section*{Bezier curves and Bernstein polynomials}
 
 We have used Bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
 \begin{align}
@@ -53,7 +51,7 @@ where $\mathbf{P}_i$ are so called control. These points are chosen such that $\
 
 
 
-\subsection*{The least mean square problem}
+\section*{The least mean square problem}
 
 For the best fit, $\mathbf{P}_1$ and $\mathbf{P}_2$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we needed to minimize the the following expression:
 
@@ -84,7 +82,7 @@ where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) +
 
 
 
-\subsection*{Choosing initial $t$-values and Newton-Raphson Iteration}
+\section*{Choosing initial $t$-values and Newton-Raphson Iteration}
 
 Choosing the initial $t$-values can be done in many ways. The easiest is probably to generate values ranging from 0 to 1 with equal distance, using the known command "linspace" in MATLAB. But is this really the parametrization that gives the smallest distance between the Bezier curve and $\gamma$? To see if it is we differentiate the distance between the two curves,
 \begin{align}
@@ -106,14 +104,14 @@ s_k = \sum_{i=1}^{k-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2}
 
 be the length of the polygonal segment from 1 to $k$, $k$ = 1, 2, ..., $n$. The initial parametric value is then $t_k = s_k/s_n$.
 
-As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so few steps are required for a $t$-value close enough to the root. We can see how the $t$-values in Figure \ref{fig:Newton-Raphson} are quite shifted after 3 iterations, from the green lines to the red lines. It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
+As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so few steps are required for a $t$-value close enough to the root. We can see how the $t$-values in Figure \ref{fig:Newton-Raphson} are quite shifted after 3 iterations, from the green lines to the red lines.It is important that the values are still in range 0 to 1, so this needs to be checked after the iterations. 
 
 \begin{figure}
 \centering
 \begin{minipage}[t]{.4\textwidth}
 \centering
 \vspace{0pt}
-    \includegraphics[scale=0.5]{newtons2-crop.pdf}
+    \includegraphics[scale=0.42, clip=true, trim = 0 0 0 5.5cm]{newtons3-crop.pdf}
     \label{fig:Newton-Raphson}
 \end{minipage}\hfill
 \begin{minipage}[t]{.4\textwidth}
@@ -126,9 +124,13 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is possible to split the interval in two, and do new approximations for the $t$-values.
 
+\section*{Dividing the curve in two}
+After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
+
+If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
 
 
-\subsection*{Unit tangent vectors}
+\section*{Unit tangent vectors}
 To find the unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$, we use the known data points $x$ and $y$ around the end points $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
 
 A tangent vector that has its origin in a corner will only need data points from one side of the end point. That is, the slope of the vector $\mathbf{v}_i$ is measured by $m_i = (y_{i+r} - y_0)/(x_{i+r} - x_0)$, $r$ being a positive integer denoting the number of data points away from the end point. One way of choosing $r$ is defining it as a fraction of the total number of data points, rounded upwards to the closest integer (------------may use math notation here).
@@ -139,16 +141,9 @@ If the error between a Bezier curve and the original curve is too large, the cur
 If the shape to be fitted has smooth corners, one option is to make all end points $C^1$. This can be done by constructing one tangent vector in an optional point on the curve, and construct new tangent vectors in points from dividing the curve recursively.
 
 
-\subsection*{Avoiding singular matrices}
+\section*{Avoiding singular matrices}
 When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
 
-
-\subsection*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively. 
-
-If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
-
------------------------
 
 Divide curve in two, recursive, largest distance
 Singular matrices

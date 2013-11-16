@@ -111,7 +111,7 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 \begin{minipage}[t]{.4\textwidth}
 \centering
 \vspace{0pt}
-    \includegraphics[scale=0.5]{newtons2-crop.pdf}
+    \includegraphics[scale=0.42, clip=true, trim = 0 0 0 5.5cm]{newtons3-crop.pdf}
     \label{fig:Newton-Raphson}
 \end{minipage}\hfill
 \begin{minipage}[t]{.4\textwidth}
@@ -124,6 +124,10 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 
 With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is possible to split the interval in two, and do new approximations for the $t$-values.
 
+\section*{Dividing the curve in two}
+After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
+
+If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
 
 
 \section*{Unit tangent vectors}
@@ -140,18 +144,6 @@ If the shape to be fitted has smooth corners, one option is to make all end poin
 \section*{Avoiding singular matrices}
 When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
 
-
-<<<<<<< HEAD
-\section*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively. 
-=======
-\subsection*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively. 
->>>>>>> 3057639a97818432b2e5ebdd15822f217c681847
-
-If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
-
------------------------
 
 Divide curve in two, recursive, largest distance
 Singular matrices

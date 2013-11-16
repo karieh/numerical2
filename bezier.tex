@@ -37,21 +37,20 @@ Eg er litt gal. \\
 
 
 
-\section*{Bezier curves and Bernstein polynomials}
+\subsection*{Bezier curves and Bernstein polynomials}
 
-We have used Bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials. A Bernstein polynomial is a polynomial of the form
+We have used cubic Bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials of the form
 \begin{align}
-B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1],
+B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1].
 \end{align}
-and a bezier curve of degree n is given by
+A Bezier curve of degree n is given by
 \begin{align}
 \mathbf{S}(t) = \sum_{i=0}^{n} \mathbf{P_i} B_{i}^n(t), \quad 0 \leq t \leq 1,
 \end{align}
-where $\mathbf{P}_i$ are so called control. These points are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$. In this report we are using cubic Bezier curves for solving the curve fitting problem, which means that each Bezier curves is made out of 4 points. $\mathbf{P}_0$ and $\mathbf{P}_3$ are end points, and $\mathbf{P}_1$ and $\mathbf{P}_2$ are points giving the curvature.
+where $\mathbf{P}_i$ are so called control points, which are chosen such that $\mathbf{P}_o$ and $\mathbf{P}_n$ are interpolation points between the Bezier curve and $\gamma$.
 
 
-
-\section*{The least mean square problem}
+\subsection*{Finding control points for best fit}
 
 For the best fit, $\mathbf{P}_1$ and $\mathbf{P}_2$ have to be chosen such that the distance between $\gamma$ and our bezier curve is the small. That is, we needed to minimize the the following expression:
 
@@ -174,7 +173,8 @@ To be able to reconstruct the Bezier curves, we store the control points for eac
 
 
 \subsection*{Avoiding singular matrices}
-When solving the system of equations above, a problem of a singular matrix may arise. We get a singular matrix when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, and this happens when the number of points in our subset of points are smaller than 3. This is because the previous described method of choosing tangent vectors will make them parallel if there are no points between them. To avoid this problem we include a space limitation in our algorithm. If the number of elements in a subset of points is smaller then a certain space parameter, we will not divide the curve any further.
+In the early stages of our research, we had some problems with the plotting of our Bezier curves; some parts of the curve were not drawn. The reason, we discovered, was that some of our matrices in the calculation of $\alpha_1$ and $\alpha_2$ was singular. This error arises when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, which happens when the number of points in our subset of points are smaller than 3. This is why we included a space limitation in our algorithm which stops the recursion when the subset of points is smaller then a certain space parameter.
+
 
 
 
@@ -250,15 +250,4 @@ with and without Newton iteration?
 \bibliography{bezierbib}   % Insert you own BibTeX file 
 
 
-\begin{tabular}{ l l l l }
-  Initial & Iteration 3 & Iteration 7 & Iteration 8 \\ 
-  0.0237 & 0.0165 & 0.0161 & 0.0161 \\
-  0.1859 & 0.1429 & 0.1403 & 0.1403 \\ 
-  0.2923 & 0.2439 & 0.2400 & 0.2399 \\ 
-  0.4235 & 0.3969 & 0.3937 & 0.3937 \\ 
-  0.5084 & 0.5115 & 0.5119 & 0.5120 \\ 
-  0.6304 & 0.6701 & 0.6741 & 0.6742 \\ 
-  0.7282 & 0.7770 & 0.7806 & 0.7807 \\ 
-  0.8823 & 0.9136 & 0.9152 & 0.9153 \\ 
-\end{tabular}
 \end{document}  

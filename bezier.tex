@@ -111,7 +111,7 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 \begin{minipage}[t]{.4\textwidth}
 \centering
 \vspace{0pt}
-    \includegraphics[scale=0.42, clip=true, trim = 0 0 0 5.5cm]{newtons3-crop.pdf}
+    \includegraphics[scale=0.42, clip=true, trim = 0 0 0.9cm 5.5cm]{newtons3-crop.pdf}
     \label{fig:Newton-Raphson}
 \end{minipage}\hfill
 \begin{minipage}[t]{.4\textwidth}
@@ -122,10 +122,8 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 \end{figure}
 
 
-With the new $t$-values, we can check the error between the Bezier curve and $\gamma$. If the error is still too big, it is possible to split the interval in two, and do new approximations for the $t$-values.
-
 \section*{Dividing the curve in two}
-After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. Figure \ref{fig:kurvedeling1} and Figure \ref{fig:kurvedeling2} show how this splitting is done on an example curve. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
+After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. Figure~\ref{fig:kurvedeling1} and Figure~\ref{fig:kurvedeling2} show how this splitting is done on an example curve. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
 
 \begin{figure}
 \centering
@@ -141,7 +139,7 @@ After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve i
 \vspace{0pt}
     \includegraphics[scale=0.5]{kurvedeling2-crop.pdf}
     \label{fig:kurvedeling2}
-    \caption{After the split. The blue curve us the $\gamma$-curve, and the red is the Bezier curve.}
+    \caption{After the split. The blue curve us the $\gamma$-curve, and the red is the Bezier curve. The red circle is the end point of the new curves.}
 \end{minipage}
 \end{figure}
 

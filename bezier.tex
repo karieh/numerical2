@@ -181,8 +181,6 @@ In this section we will present the results of our algorithm run on different te
 
 We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner detection and tolerance = 2. The result was 63 Bezier curves. The algorithm run without corner detection and tangent vectors making the shape $C^1$, gives 75 Bezier curves with the same smoothness parameter. Our image has many sharp edges, so it clearly is advantageous to detect the corners before constructing the Bezier curves. For a shape with smooth edges, the number of Bezier curves often goes slightly down when applying the algorithm without edge detection. This is especially when the tolerance is high.  
 
-We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner detection and $tolerance = 2$. The tolerance is a unit less size which depends on the number of 
-
 We run our algorithm on the picture shown in Figure~\ref{fig:stitch} with corner detection and tolerance = 2. The result was 63 Bezier curves. The algorithm run without corner detection and tangent vectors making the shape $C^1$, gives 75 Bezier curves with the same smoothness parameter. Our image has many sharp edges, so it clearly is advantageous to detect the corners.
 
 The tolerance is a unit less size which depends on the number of data points from the shape. Thus, small images need a lower tolerance to get a good approximation to the shape.  An illustration of this is shown in Figure~\ref{fig:mickey}. The algorithm is run on the same shape with tolerance = 20, but with different image size. The smaller set of data points constructs a less accurate fit to the original shape even though the original images look practically the same. 

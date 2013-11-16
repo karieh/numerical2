@@ -26,7 +26,7 @@ Hurra \\
 
 \end{abstract}
 
-\section{Introduction} 
+\section*{Introduction} 
 
 Bla bla Her kjem Introduction, men eg berre skriv litt for aa setje av plass til det. \\
 Jepsi pepsi \\
@@ -36,6 +36,7 @@ Tralalala \\
 Eg er litt gal. \\
 
 
+\section*{Theory}
 
 \subsection*{Bezier curves and Bernstein polynomials}
 
@@ -81,7 +82,7 @@ where $\mathbf{A}_i = \mathbf{P}_0(B_0(t_i) + B_1(t_i) + \mathbf{P}_3(B_3(t_i) +
 
 
 
-\section*{Choosing initial $t$-values and Newton-Raphson Iteration}
+\subsection*{Choosing initial $t$-values and Newton-Raphson Iteration}
 
 To find the parametrization which gives the smallest distance between the Bezier curve and $\gamma$, we differentiate the distance between the two curves with respect to $t$ and equate to 0:
 
@@ -121,7 +122,7 @@ As seen from Figure \ref{fig:Newton-Raphson}, this method converges quickly, so 
 \end{figure}
 
 
-\section*{Dividing the curve in two}
+\subsection*{Dividing the curve in two}
 After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve is still above the tolerance, it is possible to divide the curve in two. This can be done simply by choosing the point, $\mathbf{P}_i$, where the error is largest. Figure 2 and Figure 3 show how this splitting is done on an example curve. If $\mathbf{P}_i$ is closer to one of the endpoints than a certain space parameter, we choose to split the curve, $\gamma$, in the midpoint. After splitting, we construct a Bezier curve for each half, using the same method recursively.
 
 \begin{figure}
@@ -145,7 +146,7 @@ After using Newton-Raphson, if the error between $\gamma$ and the Bezier curve i
 If $\gamma$ has less than 3 points, splitting the curve will not make a better parametrization, since the tangent vectors in both end points will be the same, only with opposite directions.
 
 
-\section*{Unit tangent vectors}
+\subsection*{Unit tangent vectors}
 The unit tangent vectors $\mathbf{v}_0$ and $\mathbf{v}_3$ can be found by using the data points $x$ and $y$ around the end points $\mathbf{P}_0$ and $\mathbf{P}_3$. We differ between tangent vectors from corners and tangent vectors that make the curve $C^1$.
 
 A tangent vector that has its origin in a detected corner will only need data points from one side of the end point. The unit tangent vector is  $\mathbf{v}_i = \frac{[1, m_i]^T}{\sqrt{1+m_i^2}}$, where $m_i = (y_{i+r} - y_i)/(x_{i+r} - x_i)$ and $r$ is a positive integer denoting the number of data points away from the end point.
@@ -153,7 +154,7 @@ A tangent vector that has its origin in a detected corner will only need data po
 A tangent vector that has its origin in a new control point will need data points from both sides, since the curve should be $C^1$. The unit tangent vector is constructed in the same way as above, only with $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$.
 
 
-\section{Numerical experiments}
+\section*{Numerical experiments}
 
 In this section we will present the results of our algorithm run on different test problems. We will see how smoothness in the corners affects the imaging, and we will see the effects of different values for the space parameter and the error tolerance.
 
@@ -167,8 +168,6 @@ To be able to reconstruct the Bezier curves, we store the control points for eac
 
 If the error between a Bezier curve and the original curve is too large, the curve is divided in two in a new point $\mathbf{P}_i$. To obtain a curve that is $C^1$, the vector must be the tangent in $\mathbf{P}_i$ on the curve, with slope $m_i = (y_{i+r} - y_{i-r})/(x_{i+r} - x_{i-r})$. If the denominator in $m_i$ is close to zero, the unit tangent vector might be badly scaled. To avoid this, we recommend $\mathbf{v}_i = [0,1]$ when $x_{i+r} - x_i$ is below some limit close to zero. One way of choosing $r$ is defining it as a fraction of the total number of data points, rounded upwards to the closest integer. We found that this generally gave better results for different shapes. Remark that $i+r$ or $i-r$ sometimes might range outside the domain of the data points.
 
-
-\subsection*{Avoiding singular matrices}
 
 In the early stages of our research, we had some problems with the plotting of our Bezier curves; some parts of the curve were not drawn. The reason, we discovered, was that some of our matrices in the calculation of $\alpha_1$ and $\alpha_2$ was singular. This error arises when the tangent vectors, $\mathbf{v}_0$ and $\mathbf{v}_3$, are parallel, which happens when our subset of points are smaller than 3. This is why we included a space limitation in our algorithm which stops the recursion when the subset of points is smaller then a certain space parameter.
 
@@ -240,7 +239,7 @@ with and without Newton iteration?
 
 
 
-\section{Conclusion}
+\section*{Conclusion}
 \cite{Plass:1983}
 
 \bibliographystyle{plain}

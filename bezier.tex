@@ -29,7 +29,7 @@ We have used Newton-Raphson iteration to find an optimal parametrization for the
 
 \subsection*{Bezier curves and Bernstein polynomials}
 
-We have used cubic Bezier curves to approximate a given curve $\gamma$. These are parametrized curves consisting of sums of Bernstein polynomials:
+We have used cubic Bezier curves to approximate a given curve $\gamma$. From \cite{wiki:Bezier} and  we have that Bezier curves are parametrized curves consisting of sums of Bernstein polynomials:
 \begin{align}
 B_{i}^n(t) = \binom{n}{i}t^i(t-1)^{(n-i)},\quad i = 0, 1, ..., 0,\quad t \; \in \; [0,1].
 \end{align}
@@ -166,9 +166,9 @@ The Newton-Raphson iteration method has a great impact on our result. Because of
 \begin{minipage}[t]{.5\textwidth}
 \centering
 \vspace{0pt}
-    \includegraphics[scale=0.45]{figure5-crop.pdf}
+    \includegraphics[scale=0.52]{figure6-crop.pdf}
 \end{minipage}\hfill
-\caption{The picture to the left shows the original image to be fitted. The picture to the right shows the approximated curve consisting of 63 Bezier curves. The starred points are detected corners before curve fitting. The circled dots illustrate the new end points where the Bezier curves are split in two.}
+\caption{The picture to the left shows the original image to be fitted. The picture to the right shows the approximated curve consisting of 63 Bezier curves. The starred points are detected corners before curve fitting. The circled dots illustrate the new end points where the Bezier curves are split in two. The picture is collected from \cite{pic:stitch}}
 \label{fig:stitch}
 \end{figure}
 
@@ -197,7 +197,7 @@ The tolerance is a unitless size which depends on the number of data points from
 \vspace{0pt}
     \includegraphics[scale=0.3]{mickey2-crop.pdf}
 \end{minipage}\hfill
-\caption{Curve fitting with same tolerance and different image sizes. The image to the left is of size 149 kB and constructs the approximated curve next to it. The image to rhe right is of size 99 kB and constructs a much less accurate curve with the same tolerance.}
+\caption{Curve fitting with same tolerance and different image sizes. The image to the left is of size 149 kB and constructs the approximated curve next to it. The image to rhe right is of size 99 kB and constructs a much less accurate curve with the same tolerance. The pictures are collected from \cite{pic:mickey1} and \cite{pic:mickey2}.}
 \label{fig:mickey}
 \end{figure}
 
@@ -211,7 +211,6 @@ In this paper we have fitted cubic Bezier curves to shapes of choice.
 We were able to minimize the number of curves used for a given error tolerance by using the Newton-Raphson method for finding optimal $t$-values. If the error isn't small enough after a given number of iterations, the curve is divided in two. Problems occured when horizontal lines were to be approximated. This was fixed by adding a default tangent vector, and a limitation for the dividing of curves. With our algorithm it is also possible to display the number of curves used, and the points that are used to generate the Bezier curves.
 
 
-\cite{Plass:1983}
 
 \bibliographystyle{plain}
 \bibliography{bezierbib}   % Insert you own BibTeX file 

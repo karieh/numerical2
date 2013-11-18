@@ -172,7 +172,7 @@ The Newton-Raphson iteration method has a great impact on our result. Because of
 \label{fig:stitch}
 \end{figure}
 
-The tolerance is a unitless size which depends on the number of data points from the shape. Thus, small images need a lower tolerance to get a good approximation to the shape.  An illustration of this is shown in Figure~\ref{fig:mickey}. The algorithm is run on the same shape with $tolerance = 20$, but with different image size. The smaller set of data points constructs a less accurate fit to the original shape even though the original images look practically the same. 
+The tolerance is a unitless size which depends on the number of data points from the shape. Thus, small images need a lower tolerance to get a good approximation to the shape.  An illustration of this is shown in Figure~\ref{fig:mickey}. The algorithm is run on the same shape with $tolerance = 10$, but with different image size. The smaller set of data points constructs a less accurate fit to the original shape even though the original images look practically the same. 
 
 \begin{figure}
 
@@ -200,7 +200,6 @@ The tolerance is a unitless size which depends on the number of data points from
 \caption{Curve fitting with same tolerance and different image sizes. The image to the left is of size 149 kB and constructs the approximated curve next to it. The image to rhe right is of size 99 kB and constructs a much less accurate curve with the same tolerance.}
 \label{fig:mickey}
 \end{figure}
-
 
 
 
